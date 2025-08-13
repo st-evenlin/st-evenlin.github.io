@@ -59,7 +59,7 @@ Now if post-training is “probability mass surgery,” the next question would 
 
 ---
 
-### Q3: What’s the mathematical connection between different post-training methods with this lens?
+### Q3: What’s the mathematical connection between different post-training methods?
 **A:** PPO/GRPO (RL), DPO/IPO/ORPO (pairwise), and RAFT/RSFT (selection) all push the policy toward the same reward-tilted target; they differ in how $R$ is obtained and how proximity to $p_0$ is enforced.
 
 **Example (Codegen for implementing slugify(str)).**  

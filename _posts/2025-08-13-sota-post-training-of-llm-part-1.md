@@ -30,7 +30,7 @@ $$
   - **After ($p_\theta$):** remove spaces, normalize and reverse string for comparison *(passes the tests)*  
 
 **Example (instruction following)**  
-- **Prompt:** “Answer **only** with the ISO date for ‘next Monday’ from 2025-08-13.”  
+- **Prompt:** “Answer only with the ISO date for ‘next Monday’ from 2025-08-13.”  
   - **Before ($p_0$):** “Next Monday is August 18, 2025.” *(extra words violate format)*  
   - **After ($p_\theta$):** “2025-08-18” *(format rewarded; verbosity penalized)*
 
@@ -43,14 +43,14 @@ Now if post-training is “probability mass surgery,” the next question would 
 
 **Example (math, k=5).**  
 - **Prompt:** “What’s the factorial of 5? (Respond with a number only)”  
-  - **Before (5 samples):** `24, 24, 120, 25, 120` → **pass@1 = 0.4**, **pass@5 = 0.6**  
-  - **After (5 samples):** `120, 120, 120, 120, 120` → **pass@1 = 1.0**, **pass@5 = 1.0**  
+  - **Before (5 samples):** `24, 24, 120, 25, 120` → pass@1 = 0.4, pass@5 = 0.6
+  - **After (5 samples):** `120, 120, 120, 120, 120` → pass@1 = 1.0, pass@5 = 1.0  
   - **Interpretation:** The correct completion already existed; we concentrated mass on it.
 
 **Example (codegen, k=5).**  
-- **Prompt:** “`factorial(n)→int` (iterative). Raise `ValueError` for `n<0`. **Code only.**”
-  - **Before (5 samples):** only 1/5 passes → **pass@1=0.0, pass@5=0.2**
-  - **After (5 samples):** all pass → **pass@1=1.0, pass@5=1.0**
+- **Prompt:** “`factorial(n)→int` (iterative). Raise `ValueError` for `n<0`. Code only.”
+  - **Before (5 samples):** only 1/5 passes → pass@1=0.0, pass@5=0.2
+  - **After (5 samples):** all pass → pass@1=1.0, pass@5=1.0
 
 OK, now **how** do different families actually implement that probability mass shift?
 
@@ -63,13 +63,13 @@ OK, now **how** do different families actually implement that probability mass s
 **A:** PPO/GRPO (RL), DPO/IPO/ORPO (pairwise), and RAFT/RSFT (selection) all push the policy toward the same reward-tilted target; they differ in how $R$ is obtained and how proximity to $p_0$ is enforced.
 
 **Example (Codegen for implementing slugify(str)).**  
-- **Pairwise (DPO/IPO/ORPO)**: learn from chosen vs rejected code; raise the margin of compliant regex+strip over naive `.replace(" ", "-")`.
-- **Selection (RAFT/RSFT/RSO)**: sample from \(p_0\), keep only test-passing snippets; MLE on kept set makes compliant code the top mode.
-- **On-policy RL (PPO/GRPO)**: generate → run tests → reward by pass rate → update with KL leash; top-1 passes harness while staying stylistically close to ref.
-- **Inference-time reranking**: sample K, test each, pick highest-scoring; no training, higher latency.
+- Pairwise (DPO/IPO/ORPO): learn from chosen vs rejected code; raise the margin of compliant regex+strip over naive `.replace(" ", "-")`.
+- Selection (RAFT/RSFT/RSO): sample from \(p_0\), keep only test-passing snippets; MLE on kept set makes compliant code the top mode.
+- On-policy RL (PPO/GRPO): generate → run tests → reward by pass rate → update with KL leash; top-1 passes harness while staying stylistically close to ref.
+- Inference-time reranking: sample K, test each, pick highest-scoring; no training, higher latency.
 
 **Example (Summarization with style constraint)**: (e.g. “Two sentences, no emoji.”)
-  - **Pairwise (DPO/IPO/ORPO)**: prefers no-emoji, concise summaries.
-  - **Selection (RAFT/RSFT/RSO)**: train only on outputs that meet length/emoji rules.
-  - **On-policy RL (PPO/GRPO)**: reward = (coverage + brevity + no-emoji); KL prevents drift.
-  - **Inference-time reranking**: sample 8, pick best by a style/verifier judge.
+  - Pairwise (DPO/IPO/ORPO): prefers no-emoji, concise summaries.
+  - Selection (RAFT/RSFT/RSO): train only on outputs that meet length/emoji rules.
+  - On-policy RL (PPO/GRPO): reward = (coverage + brevity + no-emoji); KL prevents drift.
+  - Inference-time reranking: sample 8, pick best by a style/verifier judge.

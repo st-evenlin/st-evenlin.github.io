@@ -52,7 +52,7 @@ Now if post-training is “probability mass surgery,” the next question would 
   - **Before (5 samples):** only 1/5 passes → **pass@1=0.0, pass@5=0.2**
   - **After (5 samples):** all pass → **pass@1=1.0, pass@5=1.0**
 
-*OK, now **how** do different families actually implement that probability mass shift?
+OK, now **how** do different families actually implement that probability mass shift?
 
 [^pass@k]: *pass@1* is the probability the first (top-1) completion is correct; *pass@k* is the probability **at least one** of k samples is correct.
 

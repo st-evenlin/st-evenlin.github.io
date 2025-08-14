@@ -29,7 +29,7 @@ $$
   - **Before (p₀):** reverse the string but forgot to ignore the spaces *(fails on tests with spaces)*  
   - **After (pθ):** remove spaces, normalize and reverse string for comparison *(passes the tests)*  
 
-**Example (instruction following)**  
+**Example (Instruction Following)**  
 - **Prompt:** “Answer only with the ISO date for ‘next Monday’ from 2025-08-13.”  
   - **Before (p₀):** “Next Monday is August 18, 2025.” *(extra words violate format)*  
   - **After (pθ):** “2025-08-18” *(format rewarded; verbosity penalized)*
@@ -41,13 +41,13 @@ Now if post-training is “probability mass surgery,” the next question would 
 ### Q2: Why is that important?
 **A:** Pre-training often has **pass@1 ≪ pass@k**[^pass@k]; the model “knows” the answer but buries it. Post-training shifts mass so pass@1 ≈ pass@k.
 
-**Example (math, k=5).**  
+**Example (Math, k=5).**  
 - **Prompt:** “What’s the factorial of 5? (Respond with a number only)”  
   - **Before (5 samples):** `24, 24, 120, 25, 120` → pass@1 = 0.4, pass@5 = 0.6
   - **After (5 samples):** `120, 120, 120, 120, 120` → pass@1 = 1.0, pass@5 = 1.0  
   - **Interpretation:** The correct completion already existed; we concentrated mass on it.
 
-**Example (codegen, k=5).**  
+**Example (Codegen, k=5).**  
 - **Prompt:** “`factorial(n)→int` (iterative). Raise `ValueError` for `n<0`. Code only.”
   - **Before (5 samples):** only 1/5 passes → pass@1=0.0, pass@5=0.2
   - **After (5 samples):** all pass → pass@1=1.0, pass@5=1.0

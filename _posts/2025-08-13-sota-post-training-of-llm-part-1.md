@@ -39,7 +39,7 @@ Now if post-training is “probability mass surgery,” the next question would 
 ---
 
 ### Q2: Why is that important?
-**A:** Pre-training often has **pass@1 ≪ pass@k**[^pass@k]; the model “knows” the answer but buries it. Post-training shifts mass so pass@1 ≈ pass@k.
+**A:** Pre-training often has **pass@1 ≪ pass@k**[*]; the model “knows” the answer but buries it. Post-training shifts mass so pass@1 ≈ pass@k.
 
 **Example (Math, k=5).**  
 - **Prompt:** “What’s the factorial of 5? (Respond with a number only)”  
@@ -54,7 +54,7 @@ Now if post-training is “probability mass surgery,” the next question would 
 
 OK, now **how** do different families actually implement that probability mass shift?
 
-[^pass@k]: *pass@1* is the probability the first (top-1) completion is correct; *pass@k* is the probability **at least one** of k samples is correct.
+[*] *pass@1* is the probability the first (top-1) completion is correct; *pass@k* is the probability **at least one** of k samples is correct.
 
 
 ---

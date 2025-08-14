@@ -22,7 +22,7 @@ $$
 p_\theta(y\mid x)\ \propto\ p_0(y\mid x) * exp\(\beta\*R(y\mid x)\)
 $$
 
-- p₀ = base model, pθ = ideal model, R(y|x) = reward (explicit or implicit), β = how far you let mass move (your KL budget)
+- p₀ = base model, pθ = ideal model, R = reward (explicit or implicit), β = how far you let mass move (your KL budget)
 
 **Example (Codegen)**  
 - **Prompt:** “`is_palindrome(s)→bool`. Ignore case & non-alphanumerics. Output code only.”

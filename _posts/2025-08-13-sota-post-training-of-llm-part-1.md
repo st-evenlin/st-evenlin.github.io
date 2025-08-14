@@ -22,17 +22,17 @@ $$
 p_\theta(y\mid x)\ \propto\ p_0(y\mid x) * e^\{\beta\*R(y\mid x)\}
 $$
 
-- $p_0$ = base model, $p_\theta$ = ideal model, $R(y\mid x)$ = reward (explicit or implicit), $\beta$ = how far you let mass move (your KL budget)
+- \(p_0\) = base model, \(p_\theta\) = ideal model, \(R(y\mid x)\) = reward (explicit or implicit), \(\beta\) = how far you let mass move (your KL budget)
 
 **Example (Codegen)**  
 - **Prompt:** “`is_palindrome(s)→bool`. Ignore case & non-alphanumerics. Output code only.”
-  - **Before ($p_0$):** reverse the string but forgot to ignore the spaces *(fails on tests with spaces)*  
-  - **After ($p_\theta$):** remove spaces, normalize and reverse string for comparison *(passes the tests)*  
+  - **Before (\(p_0\)):** reverse the string but forgot to ignore the spaces *(fails on tests with spaces)*  
+  - **After (\(p_\theta\)):** remove spaces, normalize and reverse string for comparison *(passes the tests)*  
 
 **Example (instruction following)**  
 - **Prompt:** “Answer only with the ISO date for ‘next Monday’ from 2025-08-13.”  
-  - **Before ($p_0$):** “Next Monday is August 18, 2025.” *(extra words violate format)*  
-  - **After ($p_\theta$):** “2025-08-18” *(format rewarded; verbosity penalized)*
+  - **Before (\(p_0\)):** “Next Monday is August 18, 2025.” *(extra words violate format)*  
+  - **After (\(p_\theta\)):** “2025-08-18” *(format rewarded; verbosity penalized)*
 
 Now if post-training is “probability mass surgery,” the next question would be: why does this matter in practice? Why is that important?
 
@@ -60,7 +60,7 @@ OK, now **how** do different families actually implement that probability mass s
 ---
 
 ### Q3: What’s the mathematical connection between different post-training methods?
-**A:** PPO/GRPO (RL), DPO/IPO/ORPO (pairwise), and RAFT/RSFT (selection) all push the policy toward the same reward-tilted target; they differ in how $R$ is obtained and how proximity to $p_0$ is enforced.
+**A:** PPO/GRPO (RL), DPO/IPO/ORPO (pairwise), and RAFT/RSFT (selection) all push the policy toward the same reward-tilted target; they differ in how \(R\) is obtained and how proximity to \(p_0\) is enforced.
 
 **Example (Codegen for implementing slugify(str)).**  
 - Pairwise (DPO/IPO/ORPO): learn from chosen vs rejected code; raise the margin of compliant regex+strip over naive `.replace(" ", "-")`.

@@ -24,7 +24,7 @@ $$
 
 \(\cos\left(A\right)=\frac{b^2+c^2-a^2}{2\cdot b\cdot c}\)
 
-- $p_0$ = base model, \(p_\theta\) = ideal model, \(R(y\mid x)\) = reward (explicit or implicit), \(\beta\) = how far you let mass move (your KL budget)
+- <div>$p_0$</div> = base model, \(p_\theta\) = ideal model, \(R(y\mid x)\) = reward (explicit or implicit), \(\beta\) = how far you let mass move (your KL budget)
 
 **Example (Codegen)**  
 - **Prompt:** “`is_palindrome(s)→bool`. Ignore case & non-alphanumerics. Output code only.”

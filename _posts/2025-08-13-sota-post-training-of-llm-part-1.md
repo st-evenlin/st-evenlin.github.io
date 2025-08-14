@@ -1,4 +1,4 @@
-# On The Distributional View of SOTA LLM Post-Training — A 3-Part Q\&A Series
+# The Distributional View of LLM Post-Training — A 3-Part Q and A Series
 
 When I started thinking about this topic, a lot of questions were floating around in my head and I couldn't help going through them one by one. I figured it might be interesting to present a Q&A series to bring you through my journey of navigating this space.  
 

@@ -22,6 +22,8 @@ $$
 p_\theta(y\mid x)\ \propto\ p_0(y\mid x) * e^\{\beta\*R(y\mid x)\}
 $$
 
+\(\cos\left(A\right)=\frac{b^2+c^2-a^2}{2\cdot b\cdot c}\)
+
 - \(p_0\) = base model, \(p_\theta\) = ideal model, \(R(y\mid x)\) = reward (explicit or implicit), \(\beta\) = how far you let mass move (your KL budget)
 
 **Example (Codegen)**  

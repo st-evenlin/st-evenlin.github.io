@@ -19,22 +19,20 @@ This below Q&A series go from foundations to deployment with a practical, distri
 **A:** Reshape the output distribution so the highest-reward completions become top-1.  
 
 $$
-p_\theta(y\mid x)\ \propto\ p_0(y\mid x) * e^\{\beta\*R(y\mid x)\}
+p_\theta(y\mid x)\ \propto\ p_0(y\mid x) * exp\{\beta\*R(y\mid x)\}
 $$
 
-\(\cos\left(A\right)=\frac{b^2+c^2-a^2}{2\cdot b\cdot c}\)
-
-- <div>$p_0$</div> = base model, \(p_\theta\) = ideal model, \(R(y\mid x)\) = reward (explicit or implicit), \(\beta\) = how far you let mass move (your KL budget)
+- p₀ = base model, pθ = ideal model, R(y|x) = reward (explicit or implicit), β = how far you let mass move (your KL budget)
 
 **Example (Codegen)**  
 - **Prompt:** “`is_palindrome(s)→bool`. Ignore case & non-alphanumerics. Output code only.”
-  - **Before (\(p_0\)):** reverse the string but forgot to ignore the spaces *(fails on tests with spaces)*  
-  - **After (\(p_\theta\)):** remove spaces, normalize and reverse string for comparison *(passes the tests)*  
+  - **Before (p₀):** reverse the string but forgot to ignore the spaces *(fails on tests with spaces)*  
+  - **After (pθ):** remove spaces, normalize and reverse string for comparison *(passes the tests)*  
 
 **Example (instruction following)**  
 - **Prompt:** “Answer only with the ISO date for ‘next Monday’ from 2025-08-13.”  
-  - **Before (\(p_0\)):** “Next Monday is August 18, 2025.” *(extra words violate format)*  
-  - **After (\(p_\theta\)):** “2025-08-18” *(format rewarded; verbosity penalized)*
+  - **Before (p₀):** “Next Monday is August 18, 2025.” *(extra words violate format)*  
+  - **After (pθ):** “2025-08-18” *(format rewarded; verbosity penalized)*
 
 Now if post-training is “probability mass surgery,” the next question would be: why does this matter in practice? Why is that important?
 
@@ -62,11 +60,11 @@ OK, now **how** do different families actually implement that probability mass s
 ---
 
 ### Q3: What’s the mathematical connection between different post-training methods?
-**A:** PPO/GRPO (RL), DPO/IPO/ORPO (pairwise), and RAFT/RSFT (selection) all push the policy toward the same reward-tilted target; they differ in how \(R\) is obtained and how proximity to \(p_0\) is enforced.
+**A:** PPO/GRPO (RL), DPO/IPO/ORPO (pairwise), and RAFT/RSFT (selection) all push the policy toward the same reward-tilted target; they differ in how R is obtained and how proximity to p₀ is enforced.
 
 **Example (Codegen for implementing slugify(str)).**  
 - Pairwise (DPO/IPO/ORPO): learn from chosen vs rejected code; raise the margin of compliant regex+strip over naive `.replace(" ", "-")`.
-- Selection (RAFT/RSFT/RSO): sample from \(p_0\), keep only test-passing snippets; MLE on kept set makes compliant code the top mode.
+- Selection (RAFT/RSFT/RSO): sample from p₀, keep only test-passing snippets; MLE on kept set makes compliant code the top mode.
 - On-policy RL (PPO/GRPO): generate → run tests → reward by pass rate → update with KL leash; top-1 passes harness while staying stylistically close to ref.
 - Inference-time reranking: sample K, test each, pick highest-scoring; no training, higher latency.
 

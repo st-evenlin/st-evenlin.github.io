@@ -19,7 +19,7 @@ This below Q&A series go from foundations to deployment with a practical, distri
 **A:** Reshape the output distribution so the highest-reward completions become top-1.  
 
 $$
-p_\theta(y\mid x)\ \propto\ p_0(y\mid x) * exp\{\beta\*R(y\mid x)\}
+p_\theta(y\mid x)\ \propto\ p_0(y\mid x) * exp\(\beta\*R(y\mid x)\)
 $$
 
 - p₀ = base model, pθ = ideal model, R(y|x) = reward (explicit or implicit), β = how far you let mass move (your KL budget)

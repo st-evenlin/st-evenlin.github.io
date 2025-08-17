@@ -4,9 +4,7 @@ In the previous post, we have started talking about the distributional view of p
 let's use this one to dive deeper to compare various inference-time strategies and post-training techniques.
 
 ## Part 2 — Post-Training Best Practice and Its Limits
-Given the stochastic nature of LLMs, p₀ almost always assigns a non-zero probability to the desired answer for any prompt; 
-you can either sample more from the policy or provide hints, via prompts or runtime feedback, to reach it. 
-n the extreme case, one could either (i) sample an arbitrarily large number of times or (ii) embed the target answer directly as hints in the prompt, 
+Given the stochastic nature of LLMs, p₀ almost always assigns a non-zero probability to the desired answer for any prompt. One could either (i) sample an arbitrarily large number of times or (ii) embed the target answer directly as hints in the prompt, 
 both of which would almost guarantee the desired output.
 
 In that case, one might start to wonder ...
@@ -42,11 +40,10 @@ Now if inference time strategy is all you need, why is post-training even needed
 ---
 
 ### Q5: Why is post-training needed? What does it actually do?
-**A:** In theory, yes — but in practice, coverage gaps, verifier noise, and runtime cost make pure inference-time search too costly for most. 
-Post-training then emerges as the efficient approximation that amortizes the cost into weights. 
-From a distributional lens, both post-training and inference-time strategies are simply different ways to steer p₀ toward the optimal policy p*.
+**A:** In theory, yes, inference-time strategy is all you need — but in practice, coverage gaps, verifier noise, and runtime cost make pure inference-time search too costly. 
+Post-training emerges as the efficient approximation that amortizes the cost into weights. 
 
-And here’s the provocation - if you can do it at inference, you can bake it into the model, for example:
+From a distributional lens, both post-training and inference-time strategies are simply different ways to steer p₀ toward the optimal policy p*. And here’s the provocation - if you can do it at inference, you can bake it into the model, for example:
 * Thinking longer (e.g. with CoT prompting) → teach the model in post-training to generate reasoning traces and multiple candidates before deciding.
 * Self-verification → fine-tune with reward-model feedback loops so the model learns to score and refine its own outputs.
 * Tool-augmented inference → train on retrieval-augmented or tool-use traces so the model internalizes that.
@@ -61,4 +58,4 @@ Now let’s put them side by side and see where they align, and where they don�
 | **Adaptivity** | Fixed after training; needs retraining to adapt to new p*. | Can adapt instantly to new objectives, constraints, or contexts. |
 | **Computation Cost** | Paid once during training for most cases (except cases such as dynamic thinking). | Paid at every query; can be computationally heavy for large search/verification loops. |
 
-With that, looks like post-training is important and impactful after all. Let's now dive deeper next — out of the popular post-training approaches, which approaches generalize better?
+With that, looks like post-training is important and impactful after all. Let's dive deeper next — out of the popular post-training approaches, which approaches generalize better?

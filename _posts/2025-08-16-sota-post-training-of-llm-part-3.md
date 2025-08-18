@@ -2,7 +2,7 @@
 
 In the previous post, we started discussing the best practices of post-training—let’s use this one to dive deeper to understand its limits and what to do when simpler approaches stop working.
 
-## Post 3 — Advanced Topics - Limits and the Ultimate Recipe
+## Part 3 — Advanced Topics - Limits and the Ultimate Recipe
 We know that both inference-time strategies and post-training methods can bring pass@1 much closer to pass@k. 
 We also know that, in theory, pass@k can be arbitrarily high if k is sufficiently large. 
 
